@@ -372,13 +372,13 @@ function runCleanup (done) {
 }
 
 function updateNode (done) {
-  log.info("updateNode...");
   if (tupperwareJson.dependencies.nodeVersion) {
     var nodeVersion = tupperwareJson.dependencies.nodeVersion;
     async.series([
       function (done) {
         var cmd = 'sh /tupperware/scripts/_update_node.sh ' + nodeVersion;
-        log.info("cmd..."+cmd);
+        //log.info("cmd..."+cmd);
+        log.info("updateNode "+nodeVersion+" ...");
         child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'update node'));
       },
       function () {
