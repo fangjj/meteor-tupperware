@@ -371,6 +371,25 @@ function runCleanup (done) {
   ]);
 }
 
+function updateNode (done) {
+  log.info("updateNode...");
+  if (tupperwareJson.dependencies.nodeVersion) {
+    var nodeVersion = tupperwareJson.dependencies.nodeVersion;
+    async.series([
+      function (done) {
+        var cmd = 'sh /tupperware/scripts/_update_node.sh ' + nodeVersion;
+        log.info("cmd..."+cmd);
+        child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'update node'));
+      },
+      function () {
+        done();
+      }
+    ]);
+  }else{
+    done();
+  }
+}
+
 function printDone (done) {
   log.info("Success!");
   done();
@@ -383,6 +402,7 @@ async.series([
   checkCopyPath,
   extractTupperwareJson,
   installAppDeps,
+  updateNode,
   downloadMeteorInstaller,
   installMeteor,
   runPreBuildCommands,
