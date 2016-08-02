@@ -31,7 +31,7 @@ function suicide () {
 }
 
 function StringAs(string) {
-  return '"' + string.replace(/(\\|\"|\n|\r|\t)/g, "\\$1") + '"';
+  return '"' + string.replace(/(\\|\"|\n|\r|\t|!|\$)/g, "\\$1") + '"';
 }
 
 function handleExecError(done, cmd, taskDesc, error, stdout, stderr) {
