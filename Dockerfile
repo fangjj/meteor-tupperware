@@ -5,6 +5,8 @@ ENV           NODE_VERSION="0.10.43" PHANTOMJS_VERSION="2.1.1" IMAGEMAGICK_VERSI
 
 COPY          includes /tupperware
 
+RUN echo "Asia/Shanghai" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
+
 RUN           sh /tupperware/scripts/bootstrap.sh
 
 EXPOSE        80
