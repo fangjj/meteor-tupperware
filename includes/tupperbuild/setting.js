@@ -32,6 +32,7 @@ function suicide () {
 
 function StringAs(string) {
   //return '"' + string.replace(/(\\|\"|\n|\r|\t|!|\$)/g, "\\$1") + '"';
+  string = string.replace(/\s/g, '');
   return "'" + string + "'";
 }
 
