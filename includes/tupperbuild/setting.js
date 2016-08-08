@@ -79,6 +79,7 @@ function setEnv (done) {
           child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'set env'));
         } catch (e) {
           log.info('settings.json is not json format, please set METEOR_SETTINGS by yourself...');
+          child_process.exec('sh /tupperware/scripts/_start_main.sh', _.partial(handleExecError, done, cmd, 'node main.js'));
         }
       },
       function () {
