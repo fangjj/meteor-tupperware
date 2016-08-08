@@ -72,10 +72,14 @@ function setEnv (done) {
     log.info('setting Env commands...');
     async.series([
       function (done) {
-        var settingsJsonStr = StringAs(JSON.stringify(settingsJson));
-        var cmd = 'sh /tupperware/scripts/_setting.sh ' + settingsJsonStr;
-        //log.info("cmd..."+cmd);
-        child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'set env'));
+        try {
+          var settingsJsonStr = StringAs(JSON.stringify(settingsJson));
+          var cmd = 'sh /tupperware/scripts/_setting.sh ' + settingsJsonStr;
+          //log.info("cmd..."+cmd);
+          child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'set env'));
+        } catch (e) {
+          log.info('settings.json is not json format');
+        }
       },
       function () {
         done();
