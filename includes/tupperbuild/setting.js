@@ -78,7 +78,7 @@ function setEnv (done) {
           //log.info("cmd..."+cmd);
           child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'set env'));
         } catch (e) {
-          log.info('settings.json is not json format');
+          log.info('settings.json is not json format, please set METEOR_SETTINGS by yourself...');
         }
       },
       function () {
