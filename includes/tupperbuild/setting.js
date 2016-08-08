@@ -62,7 +62,8 @@ function extractSettingsJson (done) {
     settingsJson = require(copyPath + '/settings.json');
     log.info('Settings in settings.json registered.');
   } catch (e) {
-    log.info('No settings.json found.');
+    log.info('No settings.json found, please set METEOR_SETTINGS by yourself...');
+    child_process.exec('sh /tupperware/scripts/_start_main.sh', _.partial(handleExecError, done, cmd, 'node main.js'));
   }
   done();
 }
