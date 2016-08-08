@@ -56,30 +56,19 @@ function handleExecError(done, cmd, taskDesc, error, stdout, stderr) {
 
 /* Steps */
 
-function extractSettingsJson (done) {
-  /* Attempt to read in settings.json file for settings */
-  try {
-    settingsJson = require(copyPath + '/settings.json');
-    log.info('Settings in settings.json registered.');
-  } catch (e) {
-    log.info('No settings.json found, please set METEOR_SETTINGS by yourself...');
-    child_process.exec('sh /tupperware/scripts/_start_main.sh', _.partial(handleExecError, done, cmd, 'node main.js'));
-  }
-  done();
-}
-
 function setEnv (done) {
-  if (_.keys(settingsJson).length > 0) {
     log.info('setting Env commands...');
     async.series([
       function (done) {
         try {
+          settingsJson = require(copyPath + '/settings.json');
           var settingsJsonStr = StringAs(JSON.stringify(settingsJson));
           var cmd = 'sh /tupperware/scripts/_setting.sh ' + settingsJsonStr;
           //log.info("cmd..."+cmd);
+          log.info('Settings in settings.json registered.');
           child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'set env'));
         } catch (e) {
-          log.info('settings.json is not json format, please set METEOR_SETTINGS by yourself...');
+          log.info('settings.json is not registered, please set METEOR_SETTINGS by yourself...');
           child_process.exec('sh /tupperware/scripts/_start_main.sh', _.partial(handleExecError, done, cmd, 'node main.js'));
         }
       },
@@ -87,13 +76,9 @@ function setEnv (done) {
         done();
       }
     ]);
-  }else{
-    done();
-  }
 }
 
 
 async.series([
-  extractSettingsJson,
   setEnv
 ]);
