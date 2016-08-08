@@ -422,7 +422,6 @@ async.series([
   checkCopyPath,
   extractTupperwareJson,
   installAppDeps,
-  setTimeZone,
   updateNode,
   downloadMeteorInstaller,
   installMeteor,
