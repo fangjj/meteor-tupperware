@@ -17,6 +17,11 @@ fi
 
 export METEOR_SETTINGS=$1
 
+if [ ! "$?" -eq 0 ]; then
+    echo "[!] METEOR_SETTINGS Failure. Please Set EVN BY YOURSELF..."
+    node $OUTPUT_DIR/bundle/main.js
+fi
+
 echo "[-] meteor-tupperware is starting your application with NODE_ENV=$NODE_ENV and METEOR_ENV=$METEOR_ENV and METEOR_SETTINGS=$METEOR_SETTINGS..."
 
 node $OUTPUT_DIR/bundle/main.js
