@@ -8,6 +8,7 @@ var pkgjson = require('./package.json'),
 
 var tupperwareJsonDefaults = {
   "dependencies": {
+	"timeZone": "Asia/Shanghai",
     "phantomJs": false,
     "imageMagick": false
   },
@@ -390,6 +391,25 @@ function updateNode (done) {
   }
 }
 
+function setTimeZone (done) {
+  log.info("setTimeZone...");
+  if (tupperwareJson.dependencies.timeZone) {
+    var timeZone = tupperwareJson.dependencies.timeZone;
+    async.series([
+      function (done) {
+        var cmd = 'sh /tupperware/scripts/_timezone.sh ' + timeZone;
+        log.info("cmd..."+cmd);
+        child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'setTimeZone'));
+      },
+      function () {
+        done();
+      }
+    ]);
+  }else{
+    done();
+  }
+}
+
 function printDone (done) {
   log.info("Success!");
   done();
@@ -402,6 +422,7 @@ async.series([
   checkCopyPath,
   extractTupperwareJson,
   installAppDeps,
+  setTimeZone,
   updateNode,
   downloadMeteorInstaller,
   installMeteor,
