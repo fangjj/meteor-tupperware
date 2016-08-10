@@ -64,7 +64,7 @@ function setEnv (done) {
 	  var cmd = 'sh /tupperware/scripts/_setting.sh ' + settingsJsonStr;
 	  //log.info("cmd..."+cmd);
 	  log.info('Settings in settings.json registered.');
-	  var handler = child_process.spawn(cmd);
+	  var handler = child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'set env'));
         handler.stdout.on('data', function (data) {
             log.info('stdout: ' + data);
         });
@@ -79,7 +79,7 @@ function setEnv (done) {
 	} catch (e) {
 	  log.info('settings.json is not registered, please set METEOR_SETTINGS by yourself...');
 	  var cmd = 'sh /tupperware/scripts/_start_main.sh';
-        var handler = child_process.spawn(cmd);
+        var handler = child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'node main.js'));
         handler.stdout.on('data', function (data) {
             log.info('stdout: ' + data);
         });
