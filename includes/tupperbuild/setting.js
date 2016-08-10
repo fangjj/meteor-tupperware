@@ -40,7 +40,7 @@ function handleExecError(done, cmd, taskDesc, error, stdout, stderr) {
   if (! error) {
     done();
   } else {
-    log.error('While attempting to ' + taskDesc + ', the command:', cmd);
+    //log.error('While attempting to ' + taskDesc + ', the command:', cmd);
     log.error('Failed with the exit code ' + error.code + '. The signal was ' + error.signal + '.');
     if (stdout) {
       log.info('The task produced the following stdout:');
@@ -50,7 +50,7 @@ function handleExecError(done, cmd, taskDesc, error, stdout, stderr) {
       log.info('The task produced the following stderr:');
       console.log(stderr);
     }
-    suicide();
+    //suicide();
   }
 }
 
