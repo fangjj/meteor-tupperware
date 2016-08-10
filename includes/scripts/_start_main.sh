@@ -20,4 +20,4 @@ if [ -z "$METEOR_SETTINGS" ]; then
 fi
 
 echo "[-] meteor-tupperware is starting your application with NODE_ENV=$NODE_ENV and METEOR_ENV=$METEOR_ENV..."
-node $OUTPUT_DIR/bundle/main.js
+exec node $OUTPUT_DIR/bundle/main.js
