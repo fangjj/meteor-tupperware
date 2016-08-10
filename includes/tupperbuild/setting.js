@@ -72,6 +72,12 @@ function setEnv (done) {
 	}
 }
 
+function printDone (done) {
+    log.info("Success!");
+    done();
+}
 
-
-setEnv();
+async.series([
+  setEnv,
+  printDone
+]);
