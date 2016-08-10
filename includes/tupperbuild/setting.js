@@ -73,6 +73,5 @@ function setEnv (done) {
 }
 
 
-async.series([
-  setEnv
-]);
+
+setEnv();
