@@ -38,6 +38,12 @@ function StringAs(string) {
 
 function handleExecError(done, cmd, taskDesc, error, stdout, stderr) {
   if (! error) {
+      //if (stdout) {
+      //    console.log(stdout);
+      //}
+      //if (stderr) {
+      //    console.log(stderr);
+      //}
     done();
   } else {
     log.error('While attempting to ' + taskDesc + ', the command:', cmd);
@@ -81,11 +87,11 @@ function setEnv (done) {
 	  var cmd = 'sh /tupperware/scripts/_start_main.sh';
         var handler = child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'node main.js'));
         handler.stdout.on('data', function (data) {
-            log.info('stdout: ' + data);
+            log.info(data);
         });
 
         handler.stderr.on('data', function (data) {
-            log.info('stderr: ' + data);
+            log.info(data);
         });
 
         handler.on('exit', function (code) {
