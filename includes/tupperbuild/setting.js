@@ -78,12 +78,8 @@ function setEnv (done) {
                     console.log('Failed with the exit code ' + error.code + '. The signal was ' + error.signal + '.');
                     suicide();
                 }
-                if (stdout) {
-                    console.log(stdout);
-                }
-                if (stderr) {
-                    console.log(stderr);
-                }
+                console.log(stdout);
+                console.log(stderr);
             });
         }
         done();
