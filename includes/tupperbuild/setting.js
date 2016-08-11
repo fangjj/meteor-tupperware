@@ -73,13 +73,15 @@ function setEnv (done) {
         if(cmd){
             log.info("cmd..."+cmd);
             log.info('Settings in settings.json registered.');
-            child_process.exec(cmd,exec_options,function(error,stdout,stderr){
-                if(error){
-                    console.log('Failed with the exit code ' + error.code + '. The signal was ' + error.signal + '.');
-                    suicide();
-                }
-                console.log(stdout);
-                console.log(stderr);
+            var child = child_process.exec(cmd,exec_options);
+            child.stdout.on('data', function(data) {
+                console.log(data);
+            });
+            child.stderr.on('data', function(data) {
+                console.log(data);
+            });
+            child.on('close', function(code) {
+                console.log(code);
             });
         }
         done();
