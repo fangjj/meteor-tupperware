@@ -75,14 +75,14 @@ function setEnv (done) {
             log.info('Settings in settings.json registered.');
             var handler = child_process.exec(cmd,exec_options);
             handler.stdout.on('data', function (data) {
-                console.log(data);
+                console.log(data.replace(/[\r\n]/g, ''));
             });
             handler.stderr.on('data', function (data) {
-                log.error(data);
+                console.log(data.replace(/[\r\n]/g, ''));
                 //log.error('Failed with the exit code ' + error.code + '. The signal was ' + error.signal + '.');
             });
             handler.on('exit', function (code) {
-                log.info('child process exited with code ' + code);
+                console.log('child process exited with code ' + code);
             });
         }
         done();
