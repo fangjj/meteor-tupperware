@@ -61,38 +61,32 @@ function handleExecError(done, cmd, taskDesc, error, stdout, stderr) {
 
 function setEnv (done) {
     log.info('setting Env commands...');
+    var cmd = '';
 	try {
 	  settingsJson = require(copyPath + '/settings.json');
 	  var settingsJsonStr = StringAs(JSON.stringify(settingsJson));
-	  var cmd = 'sh /tupperware/scripts/_setting.sh ' + settingsJsonStr;
-	  //log.info("cmd..."+cmd);
-	  log.info('Settings in settings.json registered.');
-	  var handler = child_process.exec(cmd,exec_options);
-        handler.stdout.on('data', function (data) {
-            console.log(data);
-        });
-        handler.stderr.on('data', function (data) {
-            log.error(data);
-            //log.error('Failed with the exit code ' + error.code + '. The signal was ' + error.signal + '.');
-        });
-        handler.on('exit', function (code) {
-            log.info('child process exited with code ' + code);
-        });
+	  cmd = 'sh /tupperware/scripts/_setting.sh ' + settingsJsonStr;
 	} catch (e) {
 	  log.info('settings.json is not registered, please set METEOR_SETTINGS by yourself...');
-	  var cmd = 'sh /tupperware/scripts/_start_main.sh';
-        var handler = child_process.exec(cmd,exec_options);
-        handler.stdout.on('data', function (data) {
-            console.log(data);
-        });
-        handler.stderr.on('data', function (data) {
-            log.error(data);
-            //log.error('Failed with the exit code ' + error.code + '. The signal was ' + error.signal + '.');
-        });
-        handler.on('exit', function (code) {
-            log.info('child process exited with code ' + code);
-        });
-	}
+	  cmd = 'sh /tupperware/scripts/_start_main.sh';
+	} finally {
+        if(cmd){
+            log.info("cmd..."+cmd);
+            log.info('Settings in settings.json registered.');
+            var handler = child_process.exec(cmd,exec_options);
+            handler.stdout.on('data', function (data) {
+                console.log(data);
+            });
+            handler.stderr.on('data', function (data) {
+                log.error(data);
+                //log.error('Failed with the exit code ' + error.code + '. The signal was ' + error.signal + '.');
+            });
+            handler.on('exit', function (code) {
+                log.info('child process exited with code ' + code);
+            });
+        }
+        done();
+    }
 }
 
 async.series([
