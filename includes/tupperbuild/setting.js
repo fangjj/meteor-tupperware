@@ -71,7 +71,7 @@ function setEnv (done) {
             log.info('Settings in settings.json registered.');
             paramArray.push(settingsJsonStr);
         }
-        var child = child_process.spawn('sh',settingsJsonStr,{stdio:'pipe'});
+        var child = child_process.spawn('sh',paramArray,{stdio:'pipe'});
         if(child){
             child.stdout.on('data', function(data) {
                 console.log(data.toString('utf-8'));
