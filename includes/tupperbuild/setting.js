@@ -66,20 +66,22 @@ function setEnv (done) {
 	} catch (e) {
 	  log.info('settings.json is not registered, please set METEOR_SETTINGS by yourself...');
 	} finally {
+        var paramArray = [cmd];
         if(settingsJsonStr){
             log.info('Settings in settings.json registered.');
-            var child = child_process.spawn('sh',[cmd,settingsJsonStr],{stdio:'pipe'});
-            if(child){
-                child.stdout.on('data', function(data) {
-                    console.log(data.toString('utf-8'));
-                });
-                child.stderr.on('data', function(data) {
-                    console.log(data.toString('utf-8'));
-                });
-                child.on('close', function(code) {
-                    console.log('Failed with the exit code '+code);
-                });
-            }
+            paramArray.push(settingsJsonStr);
+        }
+        var child = child_process.spawn('sh',settingsJsonStr,{stdio:'pipe'});
+        if(child){
+            child.stdout.on('data', function(data) {
+                console.log(data.toString('utf-8'));
+            });
+            child.stderr.on('data', function(data) {
+                console.log(data.toString('utf-8'));
+            });
+            child.on('close', function(code) {
+                console.log('Failed with the exit code '+code);
+            });
         }
         done();
     }
