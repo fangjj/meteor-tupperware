@@ -58,7 +58,7 @@ function handleExecError(done, cmd, taskDesc, error, stdout, stderr) {
 
 function setEnv (done) {
     log.info('setting Env commands...');
-    var cmd = '/tupperware/scripts/_setting.sh';
+    var cmd = 'sh /tupperware/scripts/_setting.sh';
     var settingsJsonStr = '';
 	try {
 	  settingsJson = require(copyPath + '/settings.json');
@@ -66,12 +66,11 @@ function setEnv (done) {
 	} catch (e) {
 	  log.info('settings.json is not registered, please set METEOR_SETTINGS by yourself...');
 	} finally {
-        var paramArray = [cmd];
         if(settingsJsonStr){
             log.info('Settings in settings.json registered.');
-            paramArray.push(settingsJsonStr);
+            cmd = cmd + ' ' +settingsJsonStr;
         }
-        var child = child_process.spawn('sh',paramArray,{stdio:'pipe'});
+        var child = child_process.exec(cmd);
         if(child){
             child.stdout.on('data', function(data) {
                 console.log(data.toString('utf-8'));
