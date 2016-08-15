@@ -67,14 +67,13 @@ function setEnv (done) {
 	try {
 	    settingsJson = require(copyPath + '/settings.json');
         settingsJsonStr = StringAs(JSON.stringify(settingsJson));
-        cmd = 'sh /tupperware/scripts/_setting.sh';
+        cmd = 'sh /tupperware/scripts/_setting.sh ' + settingsJsonStr;
     } catch (e) {
 	  log.info('settings.json is not registered, please set METEOR_SETTINGS by yourself...');
         cmd = 'sh /tupperware/scripts/_start_main.sh';
 	} finally {
         if(settingsJsonStr){
             log.info('Settings in settings.json registered.');
-            cmd = cmd + ' ' +settingsJsonStr;
         }
         var child = child_process.exec(cmd,exec_options);
         if(child){
