@@ -10,9 +10,6 @@ var pkgjson = require('./package.json'),
 var copyPath = '/app',
     settingsJson = {};
 
-var exec_options = {
-    maxBuffer: 2*1024*1024  /*stdout和stderr的最大长度*/
-};
 var log = {};
 
 log.info = function () {
@@ -61,28 +58,28 @@ function handleExecError(done, cmd, taskDesc, error, stdout, stderr) {
 
 function setEnv (done) {
     log.info('setting Env commands...');
-    var cmd = '';
+    var cmd = '/tupperware/scripts/_setting.sh';
+    var settingsJsonStr = '';
 	try {
 	  settingsJson = require(copyPath + '/settings.json');
-	  var settingsJsonStr = StringAs(JSON.stringify(settingsJson));
-	  cmd = 'sh /tupperware/scripts/_setting.sh ' + settingsJsonStr;
+      settingsJsonStr = StringAs(JSON.stringify(settingsJson));
 	} catch (e) {
 	  log.info('settings.json is not registered, please set METEOR_SETTINGS by yourself...');
-	  cmd = 'sh /tupperware/scripts/_start_main.sh';
 	} finally {
-        if(cmd){
-            log.info("cmd..."+cmd);
+        if(settingsJsonStr){
             log.info('Settings in settings.json registered.');
-            var child = child_process.exec(cmd,exec_options);
-            child.stdout.on('data', function(data) {
-                console.log(data);
-            });
-            child.stderr.on('data', function(data) {
-                console.log(data);
-            });
-            child.on('close', function(code) {
-                console.log(code);
-            });
+            var child = child_process.spawn('sh',[cmd,settingsJsonStr],{stdio:'pipe'});
+            if(child){
+                child.stdout.on('data', function(data) {
+                    console.log(data.toString('utf-8'));
+                });
+                child.stderr.on('data', function(data) {
+                    console.log(data.toString('utf-8'));
+                });
+                child.on('close', function(code) {
+                    console.log('Failed with the exit code '+code);
+                });
+            }
         }
         done();
     }
