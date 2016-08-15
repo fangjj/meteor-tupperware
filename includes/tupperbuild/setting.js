@@ -38,12 +38,6 @@ function StringAs(string) {
 
 function handleExecError(done, cmd, taskDesc, error, stdout, stderr) {
   if (! error) {
-      //if (stdout) {
-      //    console.log(stdout);
-      //}
-      //if (stderr) {
-      //    console.log(stderr);
-      //}
     done();
   } else {
     //log.error('While attempting to ' + taskDesc + ', the command:', cmd);
@@ -64,40 +58,33 @@ function handleExecError(done, cmd, taskDesc, error, stdout, stderr) {
 
 function setEnv (done) {
     log.info('setting Env commands...');
+    var cmd = '/tupperware/scripts/_setting.sh';
+    var settingsJsonStr = '';
 	try {
 	  settingsJson = require(copyPath + '/settings.json');
-	  var settingsJsonStr = StringAs(JSON.stringify(settingsJson));
-	  var cmd = 'sh /tupperware/scripts/_setting.sh ' + settingsJsonStr;
-	  //log.info("cmd..."+cmd);
-	  log.info('Settings in settings.json registered.');
-	  var handler = child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'set env'));
-        handler.stdout.on('data', function (data) {
-            log.info('stdout: ' + data);
-        });
-
-        handler.stderr.on('data', function (data) {
-            log.info('stderr: ' + data);
-        });
-
-        handler.on('exit', function (code) {
-            log.info('child process exited with code ' + code);
-        });
+      settingsJsonStr = StringAs(JSON.stringify(settingsJson));
 	} catch (e) {
 	  log.info('settings.json is not registered, please set METEOR_SETTINGS by yourself...');
-	  var cmd = 'sh /tupperware/scripts/_start_main.sh';
-        var handler = child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'node main.js'));
-        handler.stdout.on('data', function (data) {
-            log.info(data);
-        });
-
-        handler.stderr.on('data', function (data) {
-            log.info(data);
-        });
-
-        handler.on('exit', function (code) {
-            log.info('child process exited with code ' + code);
-        });
-	}
+	} finally {
+        var paramArray = [cmd];
+        if(settingsJsonStr){
+            log.info('Settings in settings.json registered.');
+            paramArray.push(settingsJsonStr);
+        }
+        var child = child_process.spawn('sh',paramArray,{stdio:'pipe'});
+        if(child){
+            child.stdout.on('data', function(data) {
+                console.log(data.toString('utf-8'));
+            });
+            child.stderr.on('data', function(data) {
+                console.log(data.toString('utf-8'));
+            });
+            child.on('close', function(code) {
+                console.log('Failed with the exit code '+code);
+            });
+        }
+        done();
+    }
 }
 
 async.series([
