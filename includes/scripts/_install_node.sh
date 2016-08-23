@@ -15,10 +15,10 @@ gpg --keyserver pool.sks-keyservers.net --recv-keys DD8F2338BAE7501E3DD5AC78C273
 gpg --keyserver pool.sks-keyservers.net --recv-keys C4F0DFFF4E8C1A8236409D08E73BC641CC11F4C8
 gpg --keyserver pool.sks-keyservers.net --recv-keys B9AE9905FFD7803F25714661B63B535A4C206CA9
 
-curl -SLO "http://npm.taobao.org/mirrors/node/v$NODE_VERSION/$NODE_DIST.tar.gz"
+curl -SLO "http://nodejs.org/dist/v$NODE_VERSION/$NODE_DIST.tar.gz"
 check_code $?
 
-curl -SLO "http://npm.taobao.org/mirrors/node/v$NODE_VERSION/SHASUMS256.txt.asc"
+curl -SLO "http://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc"
 check_code $?
 
 gpg --verify SHASUMS256.txt.asc
@@ -31,13 +31,4 @@ tar -xzf "$NODE_DIST.tar.gz" -C /usr/local --strip-components=1
 check_code $?
 
 rm "$NODE_DIST.tar.gz" SHASUMS256.txt.asc
-check_code $?
-
-npm config set registry https://registry.npm.taobao.org
-check_code $?
-
-npm config set disturl https://npm.taobao.org/dist
-check_code $?
-
-npm config get registry
 check_code $?
