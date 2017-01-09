@@ -12,7 +12,3 @@ RUN           sh /tupperware/scripts/bootstrap.sh
 EXPOSE        80
 
 ENTRYPOINT    sh /tupperware/scripts/start_app.sh
-
-ONBUILD COPY  ./ /app
-
-ONBUILD RUN   sh /tupperware/scripts/on_build.sh
