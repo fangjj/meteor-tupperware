@@ -90,7 +90,39 @@ function setEnv (done) {
         done();
     }
 }
+function setEnv2 (done) {
+    log.info('setting Env commands...');
+    var cmd = '';
+    var settingsJsonStr = '';
+  try {
+      settingsJson = require(copyPath + '/settings.json');
+        settingsJsonStr = JSON.stringify(settingsJson);
+        cmd = '/tupperware/scripts/_setting.sh';
+  } catch (e) {
+      log.info('settings.json is not registered, please set METEOR_SETTINGS by yourself...');
+        cmd = '/tupperware/scripts/_start_main.sh';
+  } finally {
+        var paramArray = [cmd];
+        if(settingsJsonStr){
+            log.info('Settings in settings.json registered.');
+            paramArray.push(settingsJsonStr);
+        }
+        var child = child_process.spawn('sh',paramArray,{stdio:'pipe'});
+        if(child){
+            child.stdout.on('data', function(data) {
+                console.log(data.toString('utf-8'));
+            });
+            child.stderr.on('data', function(data) {
+                console.log(data.toString('utf-8'));
+            });
+            child.on('close', function(code) {
+                console.log('Failed with the exit code '+code);
+            });
+        }
+        done();
+    }
+}
 
 async.series([
-  setEnv
+  setEnv2
 ]);
