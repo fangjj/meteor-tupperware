@@ -2,6 +2,7 @@
 
 BASEDIR=`dirname $0`
 . $BASEDIR/_common.sh
+echo $#
 
 if [ ! -f $OUTPUT_DIR/bundle/main.js ]; then
   echo "[!] There is no application bundle. Please see usage docs here: https://github.com/chriswessels/meteor-tupperware"
@@ -17,8 +18,8 @@ if [ -z "$METEOR_ENV" ]; then
 fi
 
 if [ -z "$METEOR_SETTINGS" ]; then
-  export METEOR_SETTINGS=$1
+  export METEOR_SETTINGS=$*
 fi
 
-#echo "[-] meteor-tupperware is starting your application with NODE_ENV=$NODE_ENV and METEOR_ENV=$METEOR_ENV and METEOR_SETTINGS=$METEOR_SETTINGS..."
+echo "[-] meteor-tupperware is starting your application with NODE_ENV=$NODE_ENV and METEOR_ENV=$METEOR_ENV and METEOR_SETTINGS=$METEOR_SETTINGS..."
 node $OUTPUT_DIR/bundle/main.js
