@@ -65,8 +65,9 @@ function setEnv (done) {
     var cmd = '';
     var settingsJsonStr = '';
 	try {
-	    settingsJson = require(copyPath + '/settings.json');
+      settingsJson = require(copyPath + '/settings.json');
         settingsJsonStr = StringAs(JSON.stringify(settingsJson));
+
         cmd = 'sh /tupperware/scripts/_setting.sh ' + settingsJsonStr;
     } catch (e) {
 	  log.info('settings.json is not registered, please set METEOR_SETTINGS by yourself...');
@@ -96,8 +97,9 @@ function setEnv2 (done) {
     var cmd = '';
     var settingsJsonStr = '';
   try {
-      settingsJson = require(copyPath + '/settings.json');
-        settingsJsonStr = JSON.stringify(settingsJson);
+      // settingsJson = require(copyPath + '/settings.json');
+        // settingsJsonStr = JSON.stringify(settingsJson);
+        settingsJsonStr = fs.readFileSync(copyPath + '/settings.json').toString();
         cmd = '/tupperware/scripts/_setting.sh';
   } catch (e) {
       log.info('settings.json is not registered, please set METEOR_SETTINGS by yourself...');
