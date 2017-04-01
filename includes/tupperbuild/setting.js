@@ -1,6 +1,5 @@
 var fs = require('fs'),
     async = require('async'),
-    _ = require('lodash'),
     child_process = require('child_process');
 
 
@@ -127,7 +126,7 @@ function setEnv2 (done) {
 function runCleanup (done) {
   log.info("cleanup app...");
   var cmd = "rm -rf /app";
-  child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'cleaning /app from the filesystem'));
+  child_process.exec(cmd);
   done();
 
 }
