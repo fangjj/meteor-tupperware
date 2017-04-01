@@ -377,11 +377,7 @@ function runCleanup (done) {
     function (done) {
       var cmd = 'sh /tupperware/scripts/_on_build_cleanup.sh';
       child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'perform cleanup actions'));
-    },
-    function (done) {
-      var cmd = "rm /usr/local/bin/meteor && rm -rf ~/.meteor && cd /app && rm -rf !(settings.json)";
-      child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'cleaning Meteor.js from the filesystem'));
-    },
+    }
     function () {
       done();
     }
