@@ -110,6 +110,7 @@ function setEnv2 (done) {
             log.info('Settings in settings.json registered.');
             paramArray.push(settingsJsonStr);
         }
+        console.log(paramArray);
         var child = child_process.spawn('sh',paramArray,{stdio:'pipe'});
         if(child){
             child.stdout.on('data', function(data) {
