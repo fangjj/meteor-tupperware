@@ -1,5 +1,6 @@
 var fs = require('fs'),
     async = require('async'),
+    _ = require('lodash'),
     child_process = require('child_process');
 
 
