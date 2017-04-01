@@ -375,12 +375,12 @@ function runCleanup (done) {
   log.info("Performing final image cleanup...");
   async.series([
     function (done) {
-      var cmd = "rm /usr/local/bin/meteor && rm -rf ~/.meteor && rm -rf /tupperware && rm -rf /app";
-      child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'cleaning Meteor.js from the filesystem'));
-    },
-    function (done) {
       var cmd = 'sh /tupperware/scripts/_on_build_cleanup.sh';
       child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'perform cleanup actions'));
+    },
+    function (done) {
+      var cmd = "rm /usr/local/bin/meteor && rm -rf ~/.meteor && rm -rf /tupperware && rm -rf /app";
+      child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'cleaning Meteor.js from the filesystem'));
     },
     function () {
       done();
