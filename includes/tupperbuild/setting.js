@@ -99,6 +99,9 @@ function setEnv2 (done) {
   try {
       // settingsJson = require(copyPath + '/settings.json');
         settingsJson = fs.readFileSync(copyPath + '/settings.json','utf-8');
+        if(typeof settingsJson == 'string'){
+          settingsJson = JSON.parse(settingsJson);
+        }
         settingsJsonStr = JSON.stringify(settingsJson);
         cmd = '/tupperware/scripts/_setting.sh';
   } catch (e) {
