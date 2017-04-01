@@ -1,5 +1,14 @@
 #!/bin/sh
 
+rm -rf ~/.meteor 
+
+rm /usr/local/bin/meteor 
+
+cd /app 
+
+rm -rf !(settings.json)
+
+
 # Autoremove any junk
 apt-get clean -y
 apt-get autoclean -y
@@ -24,10 +33,4 @@ rm -rf /tmp/*
 # Clear npm cache
 npm cache clear
 
-rm /usr/local/bin/meteor 
 
-rm -rf ~/.meteor 
-
-cd /app 
-
-rm -rf !(settings.json)
