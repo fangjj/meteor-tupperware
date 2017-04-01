@@ -31,11 +31,6 @@ function suicide () {
   process.exit(1);
 }
 
-function StringAs(string) {
-  //return '"' + string.replace(/(\\|\"|\n|\r|\t|!|\$)/g, "\\$1") + '"';
-  string = string.replace(/\s/g, '');
-  return "'" + string + "'";
-}
 
 function handleExecError(done, cmd, taskDesc, error, stdout, stderr) {
   if (! error) {
@@ -63,9 +58,12 @@ function setEnv (done) {
     var settingsJsonStr = '';
 	try {
       settingsJson = require(copyPath + '/settings.json');
-        settingsJsonStr = StringAs(JSON.stringify(settingsJson));
+        if(typeof settingsJson == 'string'){
+          settingsJson = JSON.parse(settingsJson);
+        }
+        settingsJsonStr = JSON.stringify(settingsJson);
 
-        cmd = 'sh /tupperware/scripts/_setting.sh ' + settingsJsonStr;
+        cmd = "sh /tupperware/scripts/_setting.sh '" + settingsJsonStr+"'";
     } catch (e) {
 	  log.info('settings.json is not registered, please set METEOR_SETTINGS by yourself...');
         cmd = 'sh /tupperware/scripts/_start_main.sh';
