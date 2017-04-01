@@ -1,10 +1,7 @@
-var pkgjson = require('./package.json'),
-    fs = require('fs'),
-    _ = require('lodash'),
+var fs = require('fs'),
     async = require('async'),
-    child_process = require('child_process'),
-    // https = require('follow-redirects').https;
-    request = require('request');
+    child_process = require('child_process');
+
 
 
 var copyPath = '/app',
@@ -113,7 +110,6 @@ function setEnv2 (done) {
             log.info('Settings in settings.json registered.');
             paramArray.push(settingsJsonStr);
         }
-        console.log(paramArray);
         var child = child_process.spawn('sh',paramArray,{stdio:'pipe'});
         if(child){
             child.stdout.on('data', function(data) {
