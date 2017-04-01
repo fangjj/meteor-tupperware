@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# Autoremove any junk
+apt-get clean -y
+apt-get autoclean -y
+apt-get autoremove -y
+check_code $?
+
 # Remove apt lists
 rm -rf /var/lib/apt/lists/*
 
