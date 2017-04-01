@@ -373,10 +373,9 @@ function runPostBuildCommands (done) {
 
 function runCleanup (done) {
   log.info("Performing final image cleanup...");
-
   async.series([
     function (done) {
-      var cmd = "rm /usr/local/bin/meteor && rm -rf ~/.meteor";
+      var cmd = "rm /usr/local/bin/meteor && rm -rf ~/.meteor && rm -rf /tupperware && rm -rf /app";
       child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'cleaning Meteor.js from the filesystem'));
     },
     function (done) {
