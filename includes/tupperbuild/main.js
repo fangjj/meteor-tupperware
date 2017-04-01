@@ -231,6 +231,23 @@ function installAppDeps (done) {
   async.series(tasks);
 }
 
+function npmTaobao (done) {
+  if (tupperwareJson.dependencies.npmTaobao) {
+    async.series([
+      function (done) {
+        var cmd = 'sh /tupperware/scripts/_npm_taobao.sh';
+        log.info("npmTaobao...");
+        child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'npm taobao'));
+      },
+      function () {
+        done();
+      }
+    ]);
+  }else{
+    done();
+  }
+}
+
 function downloadMeteorInstaller (done) {
   var versionRegex = new RegExp('^METEOR@(.*)\n', 'ig');
 
@@ -422,6 +439,7 @@ async.series([
   checkCopyPath,
   extractTupperwareJson,
   installAppDeps,
+  npmTaobao,
   updateNode,
   downloadMeteorInstaller,
   installMeteor,

@@ -2,8 +2,7 @@
 
 BASEDIR=`dirname $0`
 . $BASEDIR/_common.sh
-echo $#
-echo $*
+
 if [ ! -f $OUTPUT_DIR/bundle/main.js ]; then
   echo "[!] There is no application bundle. Please see usage docs here: https://github.com/chriswessels/meteor-tupperware"
   exit 1
