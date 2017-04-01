@@ -338,7 +338,7 @@ function buildApp (done) {
 function npmInstall (done) {
   log.info("Installing npm dependencies for your app...");
 
-  var cmd = 'npm install',
+  var cmd = 'npm install --production',
       cwd = process.env.OUTPUT_DIR + '/bundle/programs/server';
 
   child_process.exec(cmd, {

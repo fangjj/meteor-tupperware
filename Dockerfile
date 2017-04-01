@@ -9,6 +9,8 @@ RUN echo "Asia/Shanghai" > /etc/timezone && dpkg-reconfigure -f noninteractive t
 
 RUN           sh /tupperware/scripts/bootstrap.sh
 
+ENV PORT 80
+
 EXPOSE        80
 
 ENTRYPOINT    sh /tupperware/scripts/start_app.sh
