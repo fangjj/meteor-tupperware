@@ -379,7 +379,7 @@ function runCleanup (done) {
       child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'perform cleanup actions'));
     },
     function (done) {
-      var cmd = "rm /usr/local/bin/meteor && rm -rf ~/.meteor && rm -rf /app";
+      var cmd = "rm /usr/local/bin/meteor && rm -rf ~/.meteor";
       child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'cleaning Meteor.js from the filesystem'));
     },
     function () {

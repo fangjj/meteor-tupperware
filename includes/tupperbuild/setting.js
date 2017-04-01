@@ -123,7 +123,14 @@ function setEnv2 (done) {
         done();
     }
 }
+function runCleanup (done) {
+  log.info("cleanup app...");
+  var cmd = "rm -rf /app";
+  child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'cleaning /app from the filesystem'));
+  done();
 
+}
 async.series([
-  setEnv2
+  setEnv2,
+  runCleanup
 ]);
