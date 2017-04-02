@@ -338,7 +338,7 @@ function buildApp (done) {
 function npmInstall (done) {
   log.info("Installing npm dependencies for your app...");
 
-  var cmd = 'npm install',
+  var cmd = 'npm install --production',
       cwd = process.env.OUTPUT_DIR + '/bundle/programs/server';
 
   child_process.exec(cmd, {
@@ -373,12 +373,7 @@ function runPostBuildCommands (done) {
 
 function runCleanup (done) {
   log.info("Performing final image cleanup...");
-
   async.series([
-    function (done) {
-      var cmd = "rm /usr/local/bin/meteor && rm -rf ~/.meteor";
-      child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'cleaning Meteor.js from the filesystem'));
-    },
     function (done) {
       var cmd = 'sh /tupperware/scripts/_on_build_cleanup.sh';
       child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'perform cleanup actions'));

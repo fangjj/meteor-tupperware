@@ -53,11 +53,10 @@ function handleExecError(done, cmd, taskDesc, error, stdout, stderr) {
 /* Steps */
 
 function setEnv (done) {
-    log.info('setting Env commands...');
     var cmd = '';
     var settingsJsonStr = '';
 	try {
-      settingsJson = require(copyPath + '/settings.json');
+      settingsJson = require('/settings.json');
         if(typeof settingsJson == 'string'){
           settingsJson = JSON.parse(settingsJson);
         }
@@ -70,6 +69,7 @@ function setEnv (done) {
 	} finally {
         if(settingsJsonStr){
             log.info('Settings in settings.json registered.');
+            fs.unlink('/settings.json');
         }
         var child = child_process.exec(cmd,exec_options);
         if(child){
@@ -88,25 +88,27 @@ function setEnv (done) {
 }
 
 function setEnv2 (done) {
-    log.info('setting Env commands...');
     var cmd = '';
     var settingsJsonStr = '';
   try {
-      // settingsJson = require(copyPath + '/settings.json');
-        settingsJson = fs.readFileSync(copyPath + '/settings.json','utf-8');
+        if(process.env.METEOR_SETTINGS){
+          throw new error('METEOR_SETTINGS has already in ENV!');
+        }
+        //settingsJson = require(copyPath + '/settings.json');
+        settingsJson = fs.readFileSync('/settings.json','utf-8');
         if(typeof settingsJson == 'string'){
           settingsJson = JSON.parse(settingsJson);
         }
         settingsJsonStr = JSON.stringify(settingsJson);
         cmd = '/tupperware/scripts/_setting.sh';
   } catch (e) {
-      log.info('settings.json is not registered, please set METEOR_SETTINGS by yourself...');
         cmd = '/tupperware/scripts/_start_main.sh';
   } finally {
         var paramArray = [cmd];
         if(settingsJsonStr){
             log.info('Settings in settings.json registered.');
             paramArray.push(settingsJsonStr);
+            fs.unlink('/settings.json');
         }
         var child = child_process.spawn('sh',paramArray,{stdio:'pipe'});
         if(child){
