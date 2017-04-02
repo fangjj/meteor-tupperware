@@ -3,7 +3,7 @@ if [ -f "/app/settings.json" ]; then
 	mv /app/settings.json /
 fi
 
-rm -rf /app
+#rm -rf /app
 
 rm -rf ~/.meteor 
 
