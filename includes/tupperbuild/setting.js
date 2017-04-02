@@ -102,7 +102,6 @@ function setEnv2 (done) {
         settingsJsonStr = JSON.stringify(settingsJson);
         cmd = '/tupperware/scripts/_setting.sh';
   } catch (e) {
-        log.info('settings.json is not registered, please set METEOR_SETTINGS by yourself...');
         cmd = '/tupperware/scripts/_start_main.sh';
   } finally {
         var paramArray = [cmd];
