@@ -19,6 +19,8 @@ fi
 if [ -z "$METEOR_SETTINGS" ]; then
 	METEOR_SETTINGS=$*
 	export METEOR_SETTINGS
+else
+	echo "[!] METEOR_SETTINGS in your ENV, Ignore settings.json."	
 fi
 
 #echo "[-] meteor-tupperware is starting your application with NODE_ENV=$NODE_ENV and METEOR_ENV=$METEOR_ENV and METEOR_SETTINGS=$METEOR_SETTINGS..."

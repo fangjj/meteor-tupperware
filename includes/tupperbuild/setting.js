@@ -53,11 +53,10 @@ function handleExecError(done, cmd, taskDesc, error, stdout, stderr) {
 /* Steps */
 
 function setEnv (done) {
-    log.info('setting Env commands...');
     var cmd = '';
     var settingsJsonStr = '';
 	try {
-      settingsJson = require(copyPath + '/settings.json');
+      settingsJson = require('/settings.json');
         if(typeof settingsJson == 'string'){
           settingsJson = JSON.parse(settingsJson);
         }
@@ -70,6 +69,7 @@ function setEnv (done) {
 	} finally {
         if(settingsJsonStr){
             log.info('Settings in settings.json registered.');
+            fs.unlink('/settings.json');
         }
         var child = child_process.exec(cmd,exec_options);
         if(child){
@@ -88,7 +88,6 @@ function setEnv (done) {
 }
 
 function setEnv2 (done) {
-    log.info('setting Env commands...');
     var cmd = '';
     var settingsJsonStr = '';
   try {
