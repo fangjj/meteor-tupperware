@@ -93,7 +93,7 @@ function setEnv2 (done) {
     var settingsJsonStr = '';
   try {
       // settingsJson = require(copyPath + '/settings.json');
-        settingsJson = fs.readFileSync(copyPath + '/settings.json','utf-8');
+        settingsJson = fs.readFileSync('/settings.json','utf-8');
         if(typeof settingsJson == 'string'){
           settingsJson = JSON.parse(settingsJson);
         }
@@ -107,6 +107,7 @@ function setEnv2 (done) {
         if(settingsJsonStr){
             log.info('Settings in settings.json registered.');
             paramArray.push(settingsJsonStr);
+            fs.unlink('/settings.json');
         }
         var child = child_process.spawn('sh',paramArray,{stdio:'pipe'});
         if(child){
@@ -123,13 +124,7 @@ function setEnv2 (done) {
         done();
     }
 }
-function runCleanup (done) {
-  log.info("cleanup app...");
-  var cmd = "rm -rf /app";
-  child_process.exec(cmd);
-  done();
-}
+
 async.series([
-  setEnv2,
-  runCleanup
+  setEnv2
 ]);

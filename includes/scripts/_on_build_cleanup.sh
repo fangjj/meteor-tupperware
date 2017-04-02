@@ -1,14 +1,13 @@
 #!/bin/sh
-shopt -s extglob
+if [ -f "/app/settings.json" ]; then
+	mv /app/settings.json /
+fi
+
+rm -rf /app
 
 rm -rf ~/.meteor 
 
 rm /usr/local/bin/meteor 
-
-cd /app 
-
-rm -rf !(settings.json)
-
 
 # Autoremove any junk
 apt-get clean -y
@@ -33,5 +32,3 @@ rm -rf /tmp/*
 
 # Clear npm cache
 npm cache clear
-
-
