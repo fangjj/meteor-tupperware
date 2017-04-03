@@ -1,7 +1,5 @@
 #!/bin/sh
-if [ -f "/app/settings.json" ]; then
-	mv /app/settings.json /
-fi
+find /app -maxdepth 1 -name "settings*.json" | xargs -i mv {} /
 
 rm -rf /app
 
