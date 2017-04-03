@@ -15,13 +15,13 @@ var exec_options = {
 
 log.info = function () {
   var args = Array.prototype.slice.apply(arguments);
-  args.splice(0, 0, '[-] ');
+  args.splice(0, 0, '[-]');
   return console.log.apply(console, args);
 };
 
 log.error = function () {
   var args = Array.prototype.slice.apply(arguments);
-  args.splice(0, 0, '[!] ');
+  args.splice(0, 0, '[!]');
   return console.log.apply(console, args);
 };
 
@@ -90,12 +90,17 @@ function setEnv (done) {
 function setEnv2 (done) {
     var cmd = '';
     var settingsJsonStr = '';
+    var settingsFileName = 'settings.json';
   try {
         if(process.env.METEOR_SETTINGS){
           throw new error('METEOR_SETTINGS has already in ENV!');
         }
+        if(process.env.SETTINGS_FILE_NAME){
+          settingsFileName = process.env.SETTINGS_FILE_NAME;
+        }
+        settingsFileName = '/' + settingsFileName;
         //settingsJson = require(copyPath + '/settings.json');
-        settingsJson = fs.readFileSync('/settings.json','utf-8');
+        settingsJson = fs.readFileSync(settingsFileName,'utf-8');
         if(typeof settingsJson == 'string'){
           settingsJson = JSON.parse(settingsJson);
         }
@@ -108,7 +113,6 @@ function setEnv2 (done) {
         if(settingsJsonStr){
             log.info('Settings in settings.json registered.');
             paramArray.push(settingsJsonStr);
-            fs.unlink('/settings.json');
         }
         var child = child_process.spawn('sh',paramArray,{stdio:'pipe'});
         if(child){
@@ -125,7 +129,14 @@ function setEnv2 (done) {
         done();
     }
 }
+function clearSttings (done) {
+  //log.info("clearSttings...");
+  var cmd = 'find / -maxdepth 1 -name "settings*.json" | xargs -i rm {}';
+  child_process.exec(cmd);
+  done();
+}
 
 async.series([
-  setEnv2
+  setEnv2,
+  clearSttings
 ]);
