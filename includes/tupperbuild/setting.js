@@ -15,13 +15,13 @@ var exec_options = {
 
 log.info = function () {
   var args = Array.prototype.slice.apply(arguments);
-  args.splice(0, 0, '[-] ');
+  args.splice(0, 0, '[-]');
   return console.log.apply(console, args);
 };
 
 log.error = function () {
   var args = Array.prototype.slice.apply(arguments);
-  args.splice(0, 0, '[!] ');
+  args.splice(0, 0, '[!]');
   return console.log.apply(console, args);
 };
 
@@ -130,7 +130,7 @@ function setEnv2 (done) {
     }
 }
 function clearSttings (done) {
-  log.info("clearSttings...");
+  //log.info("clearSttings...");
   var cmd = 'find / -maxdepth 1 -name "settings*.json" | xargs -i rm {}';
   child_process.exec(cmd);
   done();

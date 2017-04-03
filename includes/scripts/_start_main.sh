@@ -17,9 +17,9 @@ if [ -z "$METEOR_ENV" ]; then
 fi
 
 if [ -z "$METEOR_SETTINGS" ]; then
-	echo "[!] NO METEOR_SETTINGS, Please Config By Yourslef!"
+	echo "[-] NO METEOR_SETTINGS, Please Config By Yourslef!"
 else
-	echo "[!] METEOR_SETTINGS By ENV, Ignore settings.json!"		
+	echo "[-] METEOR_SETTINGS By ENV, Ignore settings.json!"		
 fi
 	
 
