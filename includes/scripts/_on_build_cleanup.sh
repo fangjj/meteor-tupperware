@@ -1,4 +1,6 @@
 #!/bin/sh
+NODE8=$1
+
 find /app -maxdepth 1 -name "settings*.json" | xargs -i mv {} /
 
 rm -rf /app
@@ -29,5 +31,8 @@ rm -rf /var/lib/cache /var/lib/log
 rm -rf /tmp/*
 
 # Clear npm cache
-#npm cache clear
-npm cache verify
+if [ $NODE8 = "1" ] ; then
+  npm cache verify
+else
+  npm cache clear
+fi

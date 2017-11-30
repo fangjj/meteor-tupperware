@@ -373,9 +373,17 @@ function runPostBuildCommands (done) {
 
 function runCleanup (done) {
   log.info("Performing final image cleanup...");
+  var isNode8 = 0;
+  if (tupperwareJson.dependencies.nodeVersion) {
+    var nodeVersion = tupperwareJson.dependencies.nodeVersion;
+    if(nodeVersion && parseInt(nodeVersion) >= 8){
+      isNode8 = 1;
+    }
+  }
   async.series([
     function (done) {
-      var cmd = 'sh /tupperware/scripts/_on_build_cleanup.sh';
+      var cmd = 'sh /tupperware/scripts/_on_build_cleanup.sh ' + isNode8;
+
       child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'perform cleanup actions'));
     },
     function () {
