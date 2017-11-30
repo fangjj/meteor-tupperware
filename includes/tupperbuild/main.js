@@ -129,7 +129,7 @@ function installAppDeps (done) {
 
     _.each(aptDependencies, function (dep, index) {
       tasks.push(function (done) {
-        var cmd = 'apt-get install -y --force-yes --no-install-recommends ' + dep;
+        var cmd = 'apt-get install -y --no-install-recommends ' + dep;
         child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'install ' + dep));
       });
     });
@@ -197,7 +197,7 @@ function installAppDeps (done) {
 
     _.each(aptDependencies, function (dep, index) {
       tasks.push(function (done) {
-        var cmd = 'apt-get install -y --force-yes --no-install-recommends ' + dep;
+        var cmd = 'apt-get install -y --no-install-recommends ' + dep;
         child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'install ' + dep));
       });
     });

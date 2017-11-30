@@ -10,9 +10,9 @@ rm -rf ~/.meteor
 rm /usr/local/bin/meteor 
 
 # Autoremove any junk
-apt-get clean -y --force-yes
-apt-get autoclean -y --force-yes
-apt-get autoremove -y --force-yes
+apt-get clean -y
+apt-get autoclean -y
+apt-get autoremove -y
 check_code $?
 
 # Remove apt lists
