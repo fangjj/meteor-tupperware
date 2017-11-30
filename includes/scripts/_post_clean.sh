@@ -1,14 +1,14 @@
 #!/bin/sh
 
 # Purge build deps
-apt-get purge -y $BUILD_DEPS
-apt-get remove --purge -y $BUILD_DEPS
+apt-get purge -y --force-yes $BUILD_DEPS
+apt-get remove --purge -y --force-yes $BUILD_DEPS
 check_code $?
 
 # Autoremove any junk
-apt-get clean -y
-apt-get autoclean -y
-apt-get autoremove -y
+apt-get clean -y --force-yes
+apt-get autoclean -y --force-yes
+apt-get autoremove -y --force-yes
 check_code $?
 
 # Remove apt lists
