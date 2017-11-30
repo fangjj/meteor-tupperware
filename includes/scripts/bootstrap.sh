@@ -4,7 +4,7 @@ BASEDIR=`dirname $0`
 
 . $BASEDIR/_common.sh
 
-. $BASEDIR/_pre_clean.sh
+#. $BASEDIR/_pre_clean.sh
 
 . $BASEDIR/_install_deps.sh
 
