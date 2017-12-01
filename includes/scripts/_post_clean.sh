@@ -25,6 +25,7 @@ rm -rf /usr/share/doc /usr/share/doc-base /usr/share/man /usr/share/locale /usr/
 rm -rf /var/lib/cache /var/lib/log
 
 # Clean out /tmp
+rm -rf /root/{.cache,.config,.local}
 rm -rf /tmp/*
 
 # Clear npm cache

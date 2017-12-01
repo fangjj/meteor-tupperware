@@ -10,6 +10,7 @@ rm -rf ~/.meteor
 rm /usr/local/bin/meteor 
 
 # Autoremove any junk
+apt-get purge -y --auto-remove apt-transport-https build-essential bsdtar bzip2 ca-certificates curl git python
 apt-get clean -y
 apt-get autoclean -y
 apt-get autoremove -y
@@ -36,3 +37,8 @@ if [ $NODE8 = "1" ] ; then
 else
   npm cache clear
 fi
+
+# remove npm
+rm -rf ~/{.npm,.cache,.config,.cordova,.local}
+rm -rf /opt/nodejs/bin/npm
+rm -rf /opt/nodejs/lib/node_modules/npm/
