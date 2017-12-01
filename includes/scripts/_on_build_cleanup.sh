@@ -7,14 +7,7 @@ rm -rf /app
 
 rm -rf ~/.meteor 
 
-rm /usr/local/bin/meteor 
-
-# Autoremove any junk
-apt-get purge -y --auto-remove apt-transport-https build-essential bsdtar bzip2 ca-certificates curl git python
-apt-get clean -y
-apt-get autoclean -y
-apt-get autoremove -y
-check_code $?
+rm /usr/local/bin/meteor
 
 # Remove apt lists
 rm -rf /var/lib/apt/lists/*
@@ -42,3 +35,10 @@ fi
 rm -rf ~/{.npm,.cache,.config,.cordova,.local}
 rm -rf /opt/nodejs/bin/npm
 rm -rf /opt/nodejs/lib/node_modules/npm/
+
+# Autoremove any junk
+apt-get purge -y --auto-remove build-essential python git curl ca-certificates sudo bzip2 apt-utils
+apt-get clean -y
+apt-get autoclean -y
+apt-get autoremove -y
+check_code $?

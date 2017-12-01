@@ -3,7 +3,7 @@
 # Environment variables
 export TUPPERBUILD_DIR="$BASEDIR/../tupperbuild"
 export OUTPUT_DIR="/output"
-export BUILD_DEPS="gcc libc6-dev make build-essential libssl-dev python"
+export BUILD_DEPS="build-essential python"
 export IMAGE_UTILS="git wget curl ca-certificates sudo bzip2 apt-utils"
 
 # Function for checking process return codes
