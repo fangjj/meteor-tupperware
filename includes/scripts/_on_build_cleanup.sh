@@ -30,11 +30,12 @@ fi
 
 # remove npm
 rm -rf ~/{.npm,.cache,.config,.cordova,.local}
-rm -rf /opt/nodejs/bin/npm
-rm -rf /opt/nodejs/lib/node_modules/npm/
+
+rm -rf /usr/local/n /usr/local/man
+rm -rf /usr/local/bin/n /usr/local/bin/npm
 
 # Autoremove any junk
-apt-get purge -y --auto-remove build-essential python git curl ca-certificates bzip2 apt-utils
+apt-get purge -y --auto-remove build-essential git curl ca-certificates bzip2 apt-utils
 apt-get clean -y
 apt-get autoclean -y
 apt-get autoremove -y

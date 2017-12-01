@@ -4,7 +4,7 @@
 export TUPPERBUILD_DIR="$BASEDIR/../tupperbuild"
 export OUTPUT_DIR="/output"
 export BUILD_DEPS="build-essential python"
-export IMAGE_UTILS="git wget curl ca-certificates sudo bzip2 apt-utils"
+export IMAGE_UTILS="git curl ca-certificates bzip2 apt-utils"
 
 # Function for checking process return codes
 check_code () {
