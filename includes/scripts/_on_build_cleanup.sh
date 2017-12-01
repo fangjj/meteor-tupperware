@@ -9,9 +9,6 @@ rm -rf ~/.meteor
 
 rm /usr/local/bin/meteor
 
-# Remove apt lists
-rm -rf /var/lib/apt/lists/*
-
 # Locale cleanup
 cp -R /usr/share/locale/en\@* /tmp/ && rm -rf /usr/share/locale/* && mv /tmp/en\@* /usr/share/locale/
 
@@ -41,4 +38,7 @@ apt-get purge -y --auto-remove build-essential python git curl ca-certificates b
 apt-get clean -y
 apt-get autoclean -y
 apt-get autoremove -y
-check_code $?
+
+# Remove apt lists
+rm -rf /var/lib/apt/lists/*
+
