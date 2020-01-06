@@ -254,12 +254,12 @@ function downloadMeteorInstaller (done) {
   var matches = versionRegex.exec(meteorReleaseString);
 
   meteorVersion = matches[1];
-
-  log.info('Downloading Meteor ' + meteorVersion + ' Installer...');
+  var meteorInstall = tupperwareJson.dependencies.meteorInstall || 'https://install.meteor.com';
+  log.info('Downloading Meteor ' + meteorVersion + ' Installer from ' + meteorInstall + ' ...');
 
   async.series([
     function (done) {
-      var cmd = 'curl https://install.meteor.com -o /tmp/install_meteor.sh';
+      var cmd = 'curl ' + meteorInstall + ' -o /tmp/install_meteor.sh';
       child_process.exec(cmd, _.partial(handleExecError, done, cmd, 'download the Meteor.js installer'));
     },
     function (done) {
